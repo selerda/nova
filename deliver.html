@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="/nova/jquery.js"></script>
+
+<style>
+li {
+	list-style-type:none;
+	line-height:28px;
+}
+</style>
+</head>
+<body>
+<div>
+	<h3>点对点</h3>
+	<ul>
+	<li>帐号：<input id="account" type="input" name="account" value="selerdaxia" size="15"/></li>
+	<li>
+		<input type="radio" name="op" value="sendMessage" checked="checked">消息推送
+		<input type="radio" name="op" value="playVideo">视频播放
+		<input type="radio" name="op" value="openURL">打开网页
+	</li>
+	<li>内容：<input id="content" type="input" name="content" value="" size="60"/></li>
+	<li><input id="push" type="button" name="push" value="发送"/></li>
+	</ul>
+</div>
+
+<script>
+
+$(document).ready(function(){
+
+	$('#push').click(function(){
+		var account = $('#account').val();
+		var content = $('#content').val();
+		var op = $('input:radio[name="op"]:checked').val();	
+		// cross domain request
+		$.getJSON("http://localhost:8080/deliver?account="+account+"&op="+op+"&content="+content+"&callback=?", function(json){
+			//console.log(json);
+		});
+		//deliver.emit('message', {'account':account, 'op':op, 'content':content});	
+	});
+    
+    $('input:radio[name="op"]').click(function(){
+        var selected = $(this).val();
+        if(selected=="sendMessage") $('#content').val("");
+        else if(selected=="playVideo") $('#content').val("http://video-js.zencoder.com/oceans-clip.mp4");
+        else if(selected=="openURL") $('#content').val("http://v.youku.com/v_showMini/id_XMzU2NDQ2MTUy.html");
+        $('#content').focus();
+    });
+});
+
+</script>
+
+</body>
+</html>
