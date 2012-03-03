@@ -21,7 +21,6 @@ server = http.Server(function(request,response){
 	}
 	var query = url.parse(request.url).query;
 	var qs = querystring.parse(query);
-	//console.log("Request for " + request.url  + " received.");
 	console.log(JSON.stringify(qs));
 	
     io.of('/'+qs.account).emit('message', { 'ret': 0, 'data': qs });
@@ -39,7 +38,6 @@ server.listen(8080);
 
 // listen to the server
 var io = require('socket.io').listen(server);
-var deliver= io.of('/deliver');
 
 io.sockets.on('connection', function (socket) {
     socket.on('channel', function(name) {
@@ -55,14 +53,3 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('broadcast', response);
     });
 });
-/*
-deliver.on('connection', function (socket) {
-    socket.on('message', function (data) {
-        console.log(data);
-        var account = data.account;
-        //db.insert('messages', {'type':'p2p', 'to':account, 'content':data.content });
-		var response = { 'ret': 0, 'data': data };
-        io.of('/'+data.account).emit('message', response);
-    });
-});
-*/

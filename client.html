@@ -3,66 +3,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<script type="text/javascript" src="/nova/jquery.js"></script>
+<script type="text/javascript" src="/nova/public/js/jquery.js"></script>
 <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>
-
+<script type="text/javascript" src="/nova/public/js/client.js"></script>
+<script>
+var uid='selerda'; 
+var cnname='CCTV-05';
+</script>
 </head>
 <body>
-<h3>Account: selerdaxia</h3>	
+<h3>uid:<span id="uid">selerda</span></h3>
 <input id="clean" type="button" name="clean" value="清空" onclick="$('#pool').empty()"/>
 <div id="pool" name="pool"></div>
 <div id="stage" style="margin: 10px 0;"></div>
-
-<script>
-function playVideo(url) {
-	url = url || "http://video-js.zencoder.com/oceans-clip.mp4";
-	var video='<video id="video_1" class="video-js vjs-default-skin" controls autoplay preload="auto" width="640" height="264" data-setup="{}"><source src="'+url+'" type="video/mp4"/></video>';
-	$('#stage').empty().append(video);
-	$('#video_1').focus();
-}
-
-function openURL(url) {
-	url = url || "http://v.youku.com/v_showMini/id_XMzU2NDQ2MTUy.html";
-	var ifm = '<iframe name="inner" width="640" height="480" src="'+url+'"></iframe>';
-	$('#stage').empty().append(ifm);
-}
-
-$(document).ready(function(){
-	var base = 'http://localhost:8080/';
-	var account='selerdaxia';
-	var root = io.connect(base);
-	var channel = io.connect(base+account);
-	
-	root.on('connect', function () {
-		root.emit('channel', account);
-		channel = io.connect(base+account); //request channel
-	});
-
-	root.on('broadcast', function (res) {
-		console.log(res);
-		$("#pool").append(res.data.content+"</br>");
-	});
-
-	channel.on('message', function (res) {
-		console.log(res);
-		$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
-		//eval(data.msg)();
-		switch(res.data.op) {
-			case 'sendMessage': break;
-			case 'playVideo': {
-				playVideo(res.data.content);
-				break;
-			}
-			case 'openURL': {
-				openURL(res.data.content);
-				break;
-			}
-		}
-	});
-
-});
-
-</script>
 
 </body>
 </html>
