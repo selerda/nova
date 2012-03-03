@@ -1,0 +1,14 @@
+{
+	"/": {
+		"template": "index",
+		"data": "index"
+	},
+	"/client": {
+		"template": "client",
+		"data": "client"
+	},
+	"/deliver": {
+		"template": "deliver",
+		"data": "deliver"
+	}
+}

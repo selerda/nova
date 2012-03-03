@@ -1,0 +1,29 @@
+div
+	h3 点对点
+		ul
+			li 帐号：
+				input(id="uid", type="input", name="uid", value="selerda", size="15")
+			li
+				input(type="radio", name="op", value="sendMessage", checked="checked") 
+				|消息推送
+				input(type="radio", name="op", value="playVideo") 
+				|视频播放
+				input(type="radio", name="op", value="openURL") 
+				|打开网页
+			li 内容：
+				input(id="content", type="input", name="content", size="60")
+			li
+				input(id="push", type="button", value="发送")d
+	h3 频道广播
+		ul
+			li 频道名称：
+				input(id="cnname", type="input", name="cnname", value="CCTV-05", size="15")
+			li
+				input(id="chat", type="button", value="发送")
+	h3 广播
+		ul
+			li 广播内容：
+				input(id="bcontent", type="input", name="bcotent", value="this is broadcast", size="60")
+			li
+				input(id="bc", type="button", value="发送")
+script(type="text/javascript", src="/js/deliver.js")
