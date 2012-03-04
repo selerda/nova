@@ -71,7 +71,6 @@ io.sockets.on('connection', function (socket) {
 	console.log("sockets connection");
 	
 	socket.on('person', function(uid) {
-		console.log("person");
 		io.of('/'+uid).on('connection', function (person) {
 			console.log(uid+" login");
 		});

@@ -1,0 +1,21 @@
+{
+    "name": "nova"
+  , "version": "0.1.2"
+  , "description": "a push system"
+  , "homepage": "https://github.com/selerda/nova"
+  , "keywords": ["push"]
+  , "author": "selerda <selerda@qq.com>"
+  , "repository":{
+        "type": "git"
+      , "url": "https://github.com/selerda/nova.git"
+    }
+  , "dependencies": {
+        "socket.io": "0.9.1-1"
+      , "express": "2.5.8"
+    }
+  , "main": "index"
+  , "engines": { "node": ">= 0.4.0" }
+  , "scripts": {
+        "test": "make test"
+    }
+}

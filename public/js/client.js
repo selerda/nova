@@ -11,51 +11,45 @@ function openURL(url) {
 	$('#stage').empty().append(ifm);
 }
 
-function ttt(){
-	console.log('ttt');
-	root.emit('person', uid);
-	//person = io.connect(base+uid);
-}
-
 var base = 'http://localhost:8080/';
-var uid = 'selerda'; $('#uid').html(uid);
+var uid = Math.ceil(Math.random()*1000);
 var cnname = 'CCTV-05';
 var root = io.connect(base);
 
-$(document).ready(function(){
+$('#uid').html(uid);
 
-	root.on('connect', function () {
-		root.emit('person', uid);
-		root.emit('channel', cnname);
-		var person = base+uid;
-		var channel = base+cnname;
-		
-		io.connect(person).on('message', function (res) {
-			console.log(res);
-			$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
-			//eval(data.msg)();
-			switch(res.data.op) {
-				case 'sendMessage': break;
-				case 'playVideo': {
-					playVideo(res.data.content);
-					break;
-				}
-				case 'openURL': {
-					openURL(res.data.content);
-					break;
-				}
+$(document).ready(function(){
+	
+	root.emit('person', uid);
+	root.emit('channel', cnname);
+	var person = base+uid;
+	var channel = base+cnname;
+	
+	io.connect(person).on('message', function (res) {
+		console.log(res);
+		$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
+		//eval(data.msg)();
+		switch(res.data.op) {
+			case 'sendMessage': break;
+			case 'playVideo': {
+				playVideo(res.data.content);
+				break;
 			}
-		});
-		
-		io.connect(channel).on('message', function (res) {
-			console.log(res);
-			$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
-		});
-		
-		root.on('broadcast', function (res) {
-			console.log(res);
-			$("#pool").append(res.data.content+"</br>");
-		});
+			case 'openURL': {
+				openURL(res.data.content);
+				break;
+			}
+		}
+	});
+	
+	io.connect(channel).on('message', function (res) {
+		console.log(res);
+		$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
+	});
+	
+	root.on('broadcast', function (res) {
+		console.log(res);
+		$("#pool").append(res.data.content+"</br>");
 	});
 
 });
