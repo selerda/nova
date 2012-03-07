@@ -1,6 +1,8 @@
 h3 uid:
 	span(id="uid")
-input(id="clean", type="button", name="clean", value="清空", onclick="ttt();$('#pool').empty()")
+input(id="clean", type="button", name="clean", value="清空", onclick="$('#pool').empty()")
+input(id="CCTV-01", type="button", value="CCTV-01", onclick="changeChannel('CCTV-05','CCTV-01');$('#pool').append('CCTV-01 selected<br/>')")
+input(id="CCTV-05", type="button", value="CCTV-05", onclick="changeChannel('CCTV-01','CCTV-05');$('#pool').append('CCTV-05 selected<br/>')")
 #pool
 #stage
 script(type="text/javascript", src="/socket.io/socket.io.js")

@@ -11,22 +11,41 @@ function openURL(url) {
 	$('#stage').empty().append(ifm);
 }
 
+function changeChannel(oldname, newname){
+	console.log("channge channel");
+	/*
+	var oldsocket = io.connect(base+oldname);
+	oldsocket.removeAllListeners();
+	oldsocket.disconnect();
+	*/
+	// force delete
+	delete io.connect().socket.namespaces['/'+oldname];
+	
+	if(!io.connect().socket.namespaces['/'+newname]) {
+		console.log(io);
+		io.connect(base).emit('channel', newname);
+		io.connect(base+newname).on('message', function (res) {
+			$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
+		});
+	}
+
+}
+
 var base = 'http://localhost:8080/';
 var uid = Math.ceil(Math.random()*1000);
 var cnname = 'CCTV-05';
 var root = io.connect(base);
-
 $('#uid').html(uid);
 
 $(document).ready(function(){
 	
 	root.emit('person', uid);
-	root.emit('channel', cnname);
+	//root.emit('channel', cnname);
 	var person = base+uid;
-	var channel = base+cnname;
+	//var channel = base+cnname;
 	
 	io.connect(person).on('message', function (res) {
-		console.log(res);
+		//console.log(res);
 		$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
 		//eval(data.msg)();
 		switch(res.data.op) {
@@ -42,13 +61,15 @@ $(document).ready(function(){
 		}
 	});
 	
+	changeChannel("", cnname);
+	/*
 	io.connect(channel).on('message', function (res) {
-		console.log(res);
+		//console.log(res);
 		$("#pool").append("["+res.data.op+"] "+ res.data.content+"</br>");
 	});
-	
+	*/
 	root.on('broadcast', function (res) {
-		console.log(res);
+		//console.log(res);
 		$("#pool").append(res.data.content+"</br>");
 	});
 

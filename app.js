@@ -24,21 +24,21 @@ app.configure('production', function(){
 app.post('/push', function(req, res){
 	console.log(JSON.stringify(req.body));
 	io.of('/'+req.body.uid).emit('message', { 'ret': 0, 'data': req.body });
-	res.contentType('json')
+	res.contentType('json');
 	res.send({'ret':0});
 });
 
 app.post('/chat', function(req, res){
 	console.log(JSON.stringify(req.body));
 	io.of('/'+req.body.cnname).emit('message', { 'ret': 0, 'data': req.body });
-	res.contentType('json')
+	res.contentType('json');
 	res.send({'ret':0});
 });
 
 app.post('/broadcast', function(req, res){
 	console.log(JSON.stringify(req.body));
 	io.sockets.emit('broadcast', { 'ret': 0, 'data': req.body });
-	res.contentType('json')
+	res.contentType('json');
 	res.send({'ret':0});
 });
 
@@ -78,7 +78,7 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('channel', function(cnname) {
 		io.of('/'+cnname).on('connection', function (channel) {
-			console.log("join channel "+ channel);
+			console.log("join channel "+ cnname);
 		});
 	});
 
