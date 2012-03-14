@@ -21,6 +21,13 @@ app.configure('production', function(){
 	console.log("Production Mode");
 });
 
+app.get('/push', function(req, res){
+	console.log(JSON.stringify(req.query));
+	io.of('/'+req.query.uid).emit('message', { 'ret': 0, 'data': req.query });
+	res.contentType('json');
+	res.send({'ret':0});
+});
+
 app.post('/push', function(req, res){
 	console.log(JSON.stringify(req.body));
 	io.of('/'+req.body.uid).emit('message', { 'ret': 0, 'data': req.body });
